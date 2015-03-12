@@ -389,4 +389,25 @@ final class ManiphestTask extends ManiphestDAO
     return $timeline;
   }
 
+
+/* -(  Deadline Hack   )------------------------- */
+
+
+  public static function getTitleAppendedWithDeadline($title, $deadline) {
+    if (strlen($deadline) == 0) {
+      phlog('Couldnt get deadline');
+      return $title;
+    }
+
+    $oldTitle = $title;
+    $parts = explode(' || ', $oldTitle);
+    $titleWithoutDeadline = $oldTitle;
+    if (count($parts) > 1) {
+      $titleWithoutDeadline = implode(array_slice($parts, 0, count($parts) - 1));
+    }
+    
+    $newTitle = $titleWithoutDeadline . " || " . $deadline;            
+    return $newTitle;
+  }
+
 }

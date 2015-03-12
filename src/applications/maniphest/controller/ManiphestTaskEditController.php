@@ -168,6 +168,14 @@ final class ManiphestTaskEditController extends ManiphestController {
         $workflow = '';
       }
 
+//-------------------   (Deadline Hack)   -----------------------//
+      $deadline_field = $aux_fields['std:maniphest:tinyowl:deadline'];
+      $deadline = $deadline_field->getNewValueForApplicationTransactions();
+
+      $deadline_string = strftime('%e %b', $deadline);
+      $new_title = ManiphestTask::getTitleAppendedWithDeadline($new_title, $deadline_string);
+//-------------------   (End)   -----------------------//
+
       $changes[ManiphestTransaction::TYPE_TITLE] = $new_title;
       $changes[ManiphestTransaction::TYPE_DESCRIPTION] = $new_desc;
 

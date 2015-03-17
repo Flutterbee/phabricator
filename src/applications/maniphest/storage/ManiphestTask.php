@@ -394,10 +394,6 @@ final class ManiphestTask extends ManiphestDAO
 
 
   public static function getTitleAppendedWithDeadline($title, $deadline) {
-    if (strlen($deadline) == 0) {
-      phlog('Couldnt get deadline');
-      return $title;
-    }
 
     $oldTitle = $title;
     $parts = explode(' || ', $oldTitle);
@@ -405,8 +401,14 @@ final class ManiphestTask extends ManiphestDAO
     if (count($parts) > 1) {
       $titleWithoutDeadline = implode(array_slice($parts, 0, count($parts) - 1));
     }
-    
-    $newTitle = $titleWithoutDeadline . " || " . $deadline;            
+
+    if (!$deadline && $deadline == 0) {
+      return $titleWithoutDeadline;
+    }
+
+    $deadline_string = strftime('%e %b', $deadline);
+    $newTitle = $titleWithoutDeadline . " || " . $deadline_string;
+
     return $newTitle;
   }
 

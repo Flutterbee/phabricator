@@ -172,8 +172,7 @@ final class ManiphestTaskEditController extends ManiphestController {
       $deadline_field = $aux_fields['std:maniphest:tinyowl:deadline'];
       $deadline = $deadline_field->getNewValueForApplicationTransactions();
 
-      $deadline_string = strftime('%e %b', $deadline);
-      $new_title = ManiphestTask::getTitleAppendedWithDeadline($new_title, $deadline_string);
+      $new_title = ManiphestTask::getTitleAppendedWithDeadline($new_title, $deadline);
 //-------------------   (End)   -----------------------//
 
       $changes[ManiphestTransaction::TYPE_TITLE] = $new_title;
